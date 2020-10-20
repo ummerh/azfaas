@@ -1,0 +1,1 @@
+az deployment group create --name hkfass --resource-group HK-FaaS-Demo --template-file template.json --parameters parameters.json

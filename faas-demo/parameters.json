@@ -1,0 +1,48 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "subscriptionId": {
+            "value": "6e8f5350-895a-489c-bad3-72bbc03df425"
+        },
+        "name": {
+            "value": "jetdemofaas"
+        },
+        "location": {
+            "value": "East US 2"
+        },
+        "hostingPlanName": {
+            "value": "ASP-HKFaaSDemo-be3f"
+        },
+        "serverFarmResourceGroup": {
+            "value": "HK-FaaS-Demo"
+        },
+        "alwaysOn": {
+            "value": false
+        },
+        "storageAccountName": {
+            "value": "hkfaasstorage"
+        },
+        "sku": {
+            "value": "Dynamic"
+        },
+        "skuCode": {
+            "value": "Y1"
+        },
+        "workerSize": {
+            "value": "0"
+        },
+        "workerSizeId": {
+            "value": "0"
+        },
+        "numberOfWorkers": {
+            "value": "1"
+        },
+        "use32BitWorkerProcess": {
+            "value": false
+        },
+        "linuxFxVersion": {
+            "value": "Java|11"
+        }
+    }
+}
