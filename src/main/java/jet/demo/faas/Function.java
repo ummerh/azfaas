@@ -1,7 +1,9 @@
 package jet.demo.faas;
 
 import java.util.Optional;
+import java.util.logging.Level;
 
+import com.azure.ai.textanalytics.TextAnalyticsClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.azure.functions.ExecutionContext;
 import com.microsoft.azure.functions.HttpMethod;
@@ -14,6 +16,7 @@ import com.microsoft.azure.functions.annotation.HttpTrigger;
 
 import jet.demo.faas.bo.SentimentRequest;
 import jet.demo.faas.bo.SentimentResponse;
+import jet.demo.faas.nlp.SentimentAnalyzer;
 
 /**
  * Azure Functions with HTTP Trigger.
@@ -38,7 +41,7 @@ public class Function {
 				sentReq = new ObjectMapper().readValue(content.get(), SentimentRequest.class);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			context.getLogger().log(Level.SEVERE, e.getLocalizedMessage());
 			res.setResponseCode(-1);
 			res.setResponse("Error::" + "Unable to load SentimentRequest");
 			sentReq = null;
@@ -49,16 +52,18 @@ public class Function {
 				return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
 						.body(new ObjectMapper().writeValueAsString(res)).build();
 			} catch (Exception e1) {
-				e1.printStackTrace();
+				context.getLogger().log(Level.SEVERE, e1.getLocalizedMessage());
 			}
 		} else {
 			try {
-				res.setResponseCode(1);
-				res.setResponse("Success");
+				String text = sentReq != null ? sentReq.getText() : qryText;
+				TextAnalyticsClient client = SentimentAnalyzer.authenticateClient(System.getenv("TEXT_ANALYTICS_KEY"),
+						System.getenv("TEXT_ANALYTICS_ENDPOINT"));
+				res = SentimentAnalyzer.analyzeText(client, text, context);
 				return request.createResponseBuilder(HttpStatus.OK).body(new ObjectMapper().writeValueAsString(res))
 						.build();
 			} catch (Exception e1) {
-				e1.printStackTrace();
+				context.getLogger().log(Level.SEVERE, e1.getLocalizedMessage());
 			}
 		}
 		return null;
