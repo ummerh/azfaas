@@ -15,3 +15,6 @@ Discover insights in unstructured text using natural language processing (NLP)â€
 * Run mvn clean package -DskipTests
 * Run mvn azure-functions:run to test it locally, make sure to setup env variables mentioned above.
 * Run mvn azure-functions:deploy to deploy to Funtion App in the cloud.
+
+## Demo
+![alt text](https://github.com/ummerh/azfaas/blob/master/sample-out.png "Demo")
