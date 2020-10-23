@@ -23,6 +23,7 @@ public class SentimentAnalyzer {
 			DocumentSentiment documentSentiment = client.analyzeSentiment(text);
 			res.setResponse("Success");
 			res.setResponseCode(1);
+			res.setText(text);
 			res.setSentiment(documentSentiment.getSentiment().toString());
 			res.setPositiveScore(documentSentiment.getConfidenceScores().getPositive());
 			res.setNeutralScore(documentSentiment.getConfidenceScores().getNeutral());
